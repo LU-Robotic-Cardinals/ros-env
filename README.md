@@ -6,14 +6,10 @@ For instalation of the nix package manager, see the official nix documentation a
 
 Once installed, clone this repository and, in the cloned directory, run
 
-'''
-bash enter-shell.sh
-'''
+'''bash enter-shell.sh'''
 
 or on NixOS systems with flakes enabled, simply run
 
-'''
-nix develop
-'''
+'''nix develop'''
 
 to setup and enter the development environment.

@@ -14,35 +14,44 @@
             "freeimage-unstable-2021-11-01"
           ];
         };
+        jazzyPackages = with pkgs; with pkgs.rosPackages.jazzy; [
+          colcon
+          ros-core
+          ament-cmake-core
+          python-cmake-module
+        ];
+        jazzyGazeboPackages = with pkgs; with pkgs.rosPackages.jazzy; [
+          gz-cmake-vendor
+          gz-common-vendor
+          gz-dartsim-vendor
+          gz-fuel-tools-vendor
+          gz-gui-vendor
+          gz-launch-vendor
+          gz-math-vendor
+          gz-msgs-vendor
+          gz-ogre-next-vendor
+          gz-physics-vendor
+          gz-plugin-vendor
+          gz-rendering-vendor
+          gz-sensors-vendor
+          gz-sim-vendor
+          gz-tools-vendor
+          gz-transport-vendor
+          gz-utils-vendor
+        ];
+        shellHook = ''
+          unset QT_QPA_PLATFORM
+        '';
       in {
         devShells.default = pkgs.mkShell {
-          name = "ros2-gz-dev";
-          packages = with pkgs; with pkgs.rosPackages.jazzy; [
-            colcon
-            ros-core
-            ament-cmake-core
-            python-cmake-module
-            gz-cmake-vendor
-            gz-common-vendor
-            gz-dartsim-vendor
-            gz-fuel-tools-vendor
-            gz-gui-vendor
-            gz-launch-vendor
-            gz-math-vendor
-            gz-msgs-vendor
-            gz-ogre-next-vendor
-            gz-physics-vendor
-            gz-plugin-vendor
-            gz-rendering-vendor
-            gz-sensors-vendor
-            gz-sim-vendor
-            gz-tools-vendor
-            gz-transport-vendor
-            gz-utils-vendor
-          ];
-          shellHook = ''
-            unset QT_QPA_PLATFORM
-          '';
+          name = "ros2-jazzy-basic-env";
+          packages = jazzyPackages;
+          inherit shellHook;
+        };
+        devShells.all = pkgs.mkShell {
+          name = "ros2-jazzy-all-packages";
+          packages = jazzyPackages ++ jazzyGazeboPackages;
+          inherit shellHook;
         };
       }) // {
         nixConfig = {
