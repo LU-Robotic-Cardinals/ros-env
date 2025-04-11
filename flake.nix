@@ -19,6 +19,7 @@
           ros-core
           ament-cmake-core
           python-cmake-module
+	  rviz2
         ];
         jazzyGazeboPackages = with pkgs; with pkgs.rosPackages.jazzy; [
           gz-cmake-vendor
