@@ -1,7 +1,7 @@
 {
   inputs = {
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/ab3c1b3b7c3eca52614b4fe9d7c05ddded5b94b1";
-    nixpkgs.url = "github:lopsided98/nixpkgs?ref=nix-ros";
+    nixpkgs.url = "github:lopsided98/nixpkgs/nix-ros";
     flake-utils.url = "github:numtide/flake-utils";
   };
   outputs = { self, nixpkgs, flake-utils, nix-ros-overlay }:
@@ -19,10 +19,11 @@
           ros-core
           ament-cmake-core
           python-cmake-module
-	        robot-state-publisher
-	        rviz2
-	        xacro
+          robot-state-publisher
+          rviz2
+          xacro
           slam-toolbox
+          bondcpp
         ];
         jazzyGazeboPackages = with pkgs; with pkgs.rosPackages.jazzy; [
           gz-cmake-vendor
@@ -43,6 +44,14 @@
           gz-transport-vendor
           gz-utils-vendor
         ];
+        libraryPackages = with pkgs; [
+          # glibc
+          # stdenv.cc.libc
+          # zlib
+          # spdlog
+          # fontconfig
+          # libkrb5
+        ];
         shellHook = ''
           unset QT_QPA_PLATFORM
           # Setup ROS 2 and colcon autocomplete
@@ -53,15 +62,15 @@
       in {
         devShells.default = pkgs.mkShell {
           name = "ros2-jazzy-basic-env";
-          packages = jazzyPackages;
+          packages = jazzyPackages ++ libraryPackages;
           inherit shellHook;
         };
         devShells.all = pkgs.mkShell {
           name = "ros2-jazzy-all-packages";
-          packages = jazzyPackages ++ jazzyGazeboPackages;
+          packages = jazzyPackages ++ jazzyGazeboPackages ++ libraryPackages;
           inherit shellHook;
         };
-        legacyPackages = pkgs; # This line is correct and necessary
+        legacyPackages = pkgs;
       }) // {
         nixConfig = {
           extra-substituters = [ "https://ros.cachix.org" ];
