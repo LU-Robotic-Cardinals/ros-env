@@ -19,7 +19,10 @@
           ros-core
           ament-cmake-core
           python-cmake-module
-	  rviz2
+	        robot-state-publisher
+	        rviz2
+	        xacro
+          slam-toolbox
         ];
         jazzyGazeboPackages = with pkgs; with pkgs.rosPackages.jazzy; [
           gz-cmake-vendor
@@ -42,6 +45,10 @@
         ];
         shellHook = ''
           unset QT_QPA_PLATFORM
+          # Setup ROS 2 and colcon autocomplete
+          eval "$(register-python-argcomplete ros2)"
+          eval "$(register-python-argcomplete colcon)"
+          eval "$(register-python-argcomplete rosidl)"
         '';
       in {
         devShells.default = pkgs.mkShell {
@@ -54,6 +61,7 @@
           packages = jazzyPackages ++ jazzyGazeboPackages;
           inherit shellHook;
         };
+        legacyPackages = pkgs; # This line is correct and necessary
       }) // {
         nixConfig = {
           extra-substituters = [ "https://ros.cachix.org" ];
