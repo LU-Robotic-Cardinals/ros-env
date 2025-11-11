@@ -59,7 +59,7 @@
           # The 'all' shell includes ROS packages plus Gazebo
           all = import ./shell.nix {
             inherit pkgs devenv inputs;
-            p = true;
+            withGazebo = true;
           };
         });
     };
