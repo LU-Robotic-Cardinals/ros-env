@@ -5,10 +5,10 @@ let
   
   # Packages common to both shells. 
   # The 'with ros;' statement allows us to use package names directly.
-  jazzyPackages = with pkgs; with ros; [
+  jazzyPackages = with ros; [
     # pkgs.libserialport
     serial-driver
-    colcon
+    pkgs.colcon
     ros-core
     ros-environment
     rplidar-ros
