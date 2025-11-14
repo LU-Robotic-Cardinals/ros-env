@@ -12,6 +12,7 @@ let
     ros-core
     ros-environment
     rplidar-ros
+    cyclonedds
     ament-cmake-core
     python-cmake-module
     robot-state-publisher
@@ -69,9 +70,12 @@ let
     #!${pkgs.bash}/bin/bash
     
     colcon build --symlink-install
-    source install/setup.bash
 
     echo "Package Built"
+
+    source install/setup.bash
+
+    echo "ENV Sourced"
   '';
 
    
