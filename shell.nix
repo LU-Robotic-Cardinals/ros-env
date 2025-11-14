@@ -33,33 +33,35 @@ let
     launch-xml              # If launch files use XML format
     twist-mux
 
-    hardware-interface      # <--- Important for custom hardware plugin development
-    transmission-interface  # <--- Important for defining joint/actuator relationships
+    hardware-interface  
+    transmission-interface
     diff-drive-controller
-    joint-state-broadcaster # <--- Ensures sensor data gets published to /joint_states
+    joint-state-broadcaster
     forward-command-controller
     control-toolbox
   ];
 
   # Gazebo packages, only included if withGazebo is true
   jazzyGazeboPackages = with ros; [
+    ros-gz
     gz-cmake-vendor
-    gz-common-vendor
     gz-dartsim-vendor
-    gz-fuel-tools-vendor
-    gz-gui-vendor
-    gz-launch-vendor
     gz-math-vendor
-    # gz-msgs-vendor
-    gz-ogre-next-vendor
-    gz-physics-vendor
     gz-plugin-vendor
-    gz-rendering-vendor
-    gz-sensors-vendor
-    gz-sim-vendor
     gz-tools-vendor
     gz-transport-vendor
     gz-utils-vendor
+
+    # gz-common-vendor
+    # gz-fuel-tools-vendor
+    # gz-gui-vendor
+    # gz-launch-vendor
+    # gz-msgs-vendor
+    # gz-ogre-next-vendor
+    # gz-physics-vendor
+    # gz-rendering-vendor
+    # gz-sensors-vendor
+    # gz-sim-vendor
   ];
 
   # Define the custom script/command
@@ -78,7 +80,7 @@ let
 
 
 in 
-devenv.lib.mkShell { # <-- This is the final expression returned by the function
+devenv.lib.mkShell {
   inherit inputs pkgs;
 
   # This is the attribute set being passed to mkShell
@@ -90,7 +92,7 @@ devenv.lib.mkShell { # <-- This is the final expression returned by the function
 
       # The enterShell block replaces your original shellHook
       enterShell = ''
-        # unset QT_QPA_PLATFORM
+        unset QT_QPA_PLATFORM
         # unset QT_PLUGIN_PATH
         # unset LD_LIBRARY_PATH
         # unset QT_STYLE_OVERRIDE

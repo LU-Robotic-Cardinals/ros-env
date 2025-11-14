@@ -1,6 +1,7 @@
 {
   inputs = {
-    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay";
+    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/d1b93bbb043cdcb15a10e801aa3aaf3a08d51a35";
+    # nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/nixpkgs-ros-rolling";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     systems.url = "github:nix-systems/default";
     devenv.url = "github:cachix/devenv";
@@ -34,7 +35,7 @@
             inherit system;
             overlays = [ nix-ros-overlay.overlays.default ];
             config.permittedInsecurePackages = [
-              "freeimage-unstable-2021-11-01"
+              "freeimage-3.18.0-unstable-2024-04-18"
             ];
           };
         in
